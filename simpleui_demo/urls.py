@@ -19,8 +19,8 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
-admin.site.site_title = '管理后台'
-admin.site.site_header = '员工管理后台'
+admin.site.site_title = 'SRS'
+admin.site.site_header = '智慧零售系统'
 
 urlpatterns = [
                   # 配置admindoc
