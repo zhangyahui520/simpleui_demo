@@ -7,20 +7,20 @@ from django.http import JsonResponse
 from django.urls import reverse
 
 from simpleui.admin import AjaxAdmin
-from distribution.models import FillMno
+from distribution.models import FillMno, WhiteListOfWithdrawn, VehicleInformation
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin, ImportExportActionModelAdmin
 
 
 # Register your models here.
-class ProxyResource(resources.ModelResource):
-    class Meta:
-        model = FillMno
+# class ProxyResource(resources.ModelResource):
+#     class Meta:
+#         model = FillMno
 
 
 @admin.register(FillMno)
 class FillMnoAdmin(ImportExportActionModelAdmin, AjaxAdmin):
-    resources_class = ProxyResource  # 定义数据库表
+    # resources_class = ProxyResource  # 定义数据库表
 
     # 需要展示的字段列表
     list_display = ('id', 'city', 'mno', 'mname', 'ct', 'mt')
@@ -57,3 +57,59 @@ class FillMnoAdmin(ImportExportActionModelAdmin, AjaxAdmin):
 
     # 增加自定义按钮, 新增的标签都需要在这里定义
     # actions = ['make_copy', 'custom_button', 'layer_input']
+
+@admin.register(WhiteListOfWithdrawn)
+class WhiteListOfWithdrawnAdmin(ImportExportActionModelAdmin, AjaxAdmin):
+    # resources_class = ProxyResource  # 定义数据库表
+
+    # 需要展示的字段列表
+    list_display = ('id', 'city', 'aid', 'gcid', 'aname', 'note', 'ct', 'mt')
+
+    # 可以检索的字段
+    search_fields = ('city', 'aid', 'gcid', 'aname')
+
+    # 每页展示的行数
+    list_per_page = 20
+
+    # 需要筛选的列
+    list_filter = ('ct',)
+
+    # 日期层次
+    date_hierarchy = 'ct'
+
+    # 点击添加时增加的字段
+    fieldsets = ((None, {'fields': ('city', 'aid', 'gcid', 'aname', 'note',)}),)
+
+    # 保存后展示在最上方
+    save_on_top = True
+
+    # 是否显示选择的个数
+    actions_selection_counter = True
+
+@admin.register(VehicleInformation)
+class VehicleInformationAdmin(ImportExportActionModelAdmin, AjaxAdmin):
+    # resources_class = ProxyResource  # 定义数据库表
+
+    # 需要展示的字段列表
+    list_display = ('id', 'city', 'name', 'car_info', 'quantity_available', 'can_withdrawn', 'ct', 'mt')
+
+    # 可以检索的字段
+    search_fields = ('city', 'name')
+
+    # 每页展示的行数
+    list_per_page = 20
+
+    # 需要筛选的列
+    list_filter = ('ct',)
+
+    # 日期层次
+    date_hierarchy = 'ct'
+
+    # 点击添加时增加的字段
+    fieldsets = ((None, {'fields': ('city', 'name', 'car_info', 'quantity_available', 'can_withdrawn',)}),)
+
+    # 保存后展示在最上方
+    save_on_top = True
+
+    # 是否显示选择的个数
+    actions_selection_counter = True
