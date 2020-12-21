@@ -7,7 +7,7 @@ from django.http import JsonResponse
 from django.urls import reverse
 
 from simpleui.admin import AjaxAdmin
-from distribution.models import FillMno, WhiteListOfWithdrawn, VehicleInformation
+from distribution.models import FillMno, WhiteListOfWithdrawn, VehicleInformation, CityMasterPhone
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin, ImportExportActionModelAdmin
 
@@ -107,6 +107,36 @@ class VehicleInformationAdmin(ImportExportActionModelAdmin, AjaxAdmin):
 
     # 点击添加时增加的字段
     fieldsets = ((None, {'fields': ('city', 'name', 'car_info', 'quantity_available', 'can_withdrawn',)}),)
+
+    # 保存后展示在最上方
+    save_on_top = True
+
+    # 是否显示选择的个数
+    actions_selection_counter = True
+
+
+
+@admin.register(CityMasterPhone)
+class CityMasterPhoneAdmin(ImportExportActionModelAdmin, AjaxAdmin):
+    # resources_class = ProxyResource  # 定义数据库表
+
+    # 需要展示的字段列表
+    list_display = ('id', 'city', 'name', 'phone', 'ct', 'mt')
+
+    # 可以检索的字段
+    search_fields = ('city', 'name')
+
+    # 每页展示的行数
+    list_per_page = 20
+
+    # 需要筛选的列
+    list_filter = ('ct',)
+
+    # 日期层次
+    date_hierarchy = 'ct'
+
+    # 点击添加时增加的字段
+    fieldsets = ((None, {'fields': ('city', 'name', 'phone', )}),)
 
     # 保存后展示在最上方
     save_on_top = True

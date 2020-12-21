@@ -55,3 +55,21 @@ class VehicleInformation(models.Model):
 
     def __str__(self):
         return self.name
+
+
+
+class CityMasterPhone(models.Model):
+    # 定义字段
+    city = models.CharField(max_length=10, verbose_name='城市名')
+    name = models.CharField(max_length=20, verbose_name='姓名')
+    phone = models.CharField(max_length=11, verbose_name='手机号')
+    ct = models.DateField(verbose_name='创建时间', auto_now_add=True)
+    mt = models.DateField(verbose_name='更新时间', auto_now=True)
+
+    # 相当于表名
+    class Meta:
+        verbose_name = '城市负责人联系电话'
+        verbose_name_plural = '城市负责人联系方式管理'
+
+    def __str__(self):
+        return self.city
